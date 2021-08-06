@@ -15,8 +15,13 @@ func (t *text) enabled() bool {
 }
 
 func (t *text) string() string {
-	textProperty := t.props.getString(TextProperty, "!!text property not defined!!")
-	return textProperty
+    template := &textTemplate{
+        Template: t.props.getString(TextProperty, "!!text property not defined!!"),
+        Context: t,
+        Env: t.env,
+    }
+	text := template.renderPlainContextTemplate(nil)
+	return text;
 }
 
 func (t *text) init(props *properties, env environmentInfo) {
